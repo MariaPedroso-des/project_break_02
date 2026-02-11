@@ -1,7 +1,7 @@
 //Configuración de la base de datos
 
-const mongoose = require('mongoose');
 require('dotenv').config();
+const mongoose = require('mongoose');
 
 const dbConnection = async() => {
     try {
