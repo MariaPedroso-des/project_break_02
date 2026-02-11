@@ -1,0 +1,1 @@
+//Generala barra de navegación con las categorias. Diferente para dashboard

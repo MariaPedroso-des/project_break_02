@@ -36,3 +36,6 @@ npm i -D jest -> porque no es una dependencia que necesite mi proyecto, sino una
 -- CONFIGURAR CLOUDINARY en config/cloudinary.js
  npm i install cloudinary, multer
       - incluir CLOUD_NAME, API KEY y API SECRET en el .env
+
+
+--// Comprobación para saber si la BD está conectada. Desde index.js: imprimir console.log(mongoose.connection.readyState) DESPUÉS DE LLAMAR await dbConnection()

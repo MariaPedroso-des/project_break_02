@@ -1,5 +1,5 @@
 // Herramientas para operar con MongoDB. 
-// Aquí definimos qué es un producto.
+// Aquí definimos qué es un producto utilizando mongoose.
 
 const mongoose = require('mongoose');
 

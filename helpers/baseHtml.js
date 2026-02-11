@@ -1,0 +1,1 @@
+// Aquí irá el HTML común a todas las páginas

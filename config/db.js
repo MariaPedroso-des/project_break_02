@@ -1,4 +1,4 @@
-//Configuración de la base de datos
+//Configuración de la base de datos Mongo Atlas
 
 require('dotenv').config();
 const mongoose = require('mongoose');

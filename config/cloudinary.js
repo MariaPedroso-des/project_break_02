@@ -1,3 +1,6 @@
+// Configuración
+
+require('dotenv').config()
 const cloudinary = require('cloudinary').v2
 
 cloudinary.config({
@@ -6,8 +9,27 @@ cloudinary.config({
   api_secret: process.env.CLOUD_SECRET_KEY
 })
 
-// TERMINAR FUNCION
-// function  {
+module.exports = cloudinary
+
+
+
+
+
+//FUNCIONA CON IMGS EN EL PROYECTO
+// cloudinary.uploader.upload('camisetaverde.webp', { folder: 'tienda-ProjectBreak02' })
+//   .then(result => {
+//     console.log(result.secure_url)
+//     console.log(result.public_id)
+//   })
+//   .catch (error => console.log(error))
+
+
+
+
+
+
+
+//PENDIENTE CONFIGURAR
 //     transformation: [
 //       {
 //         quality: 'auto',
@@ -21,5 +43,3 @@ cloudinary.config({
 //       },
 //   ]
 //   };
-
-module.exports = cloudinary

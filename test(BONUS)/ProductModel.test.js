@@ -2,10 +2,13 @@
 
 const mongoose = require('mongoose')
 const { dbConnection } = require('../config/db.js')
-dbConnection()
 
 //Importo el modelo de producto
-const Product = require('./Product.js')
+const Product = require('../models/Product.js')
+
+beforeAll(async () => {
+  await dbConnection()
+})
 
 beforeEach( async () => {
   await Product.deleteMany({})
@@ -13,19 +16,26 @@ beforeEach( async () => {
 
 describe('Product model test', () => {
   it('should create a new product', async () => {
-  Product.create( 
-    {
+
+    const productCreate = await Product.create({
       name: 'camiseta',
       description: 'camiseta básica de manga corta regular fit',
-      image: imgUrl,
+      image: 'https://imgUrl.com/test',
       color: 'verde',
       category: 'ropa',
       size: 'M',
       price: 30.99
    })
+   expect(productCreate.name).toBe('camiseta')
+   expect(productCreate.price).toBe(30.99)
+
+   const count = await Product.countDocuments()
+   expect(count).toBe(1)
   })
 })
 
+
+//Cierra conexión
 afterAll(async () => {
   await mongoose.connection.close()
 })
