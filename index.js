@@ -6,9 +6,9 @@ const express = require('express')
 const app = express()
 const dotenv = require('dotenv')
 dotenv.config()
-const productsRoutes = require('./routes/productRoutes.js')
+const productsApiRoutes = require('./routes/productApiRoutes.js')
 
-// const mongoose = require('mongoose')
+const mongoose = require('mongoose')
 
 const { dbConnection } = require('./config/db.js')
 
@@ -18,7 +18,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 //Ruta inicial producto
-app.use('/dashboard', productsRoutes)
+app.use('/dashboard', productsApiRoutes)
 
 app.get('/', (req, res) => {
   res.send('Hola mundo')
@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 const startServer = async () => {
   try {
     await dbConnection()
-    // console.log(mongoose.connection.readyState)
+    console.log(mongoose.connection.readyState)
     app.listen(PORT, () => console.log(`Server started on port http://localhost:${PORT}`))
   }
   catch (err) {
