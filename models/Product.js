@@ -3,8 +3,8 @@
 
 const mongoose = require('mongoose');
 
-const validColors = ['rojo', 'azul', 'verde', 'negro', 'blanco', 'gris']
-const validCategory = ['ropa', 'gorras', 'accesorios', 'vinilos']
+const validColors = ['Rojo', 'Azul', 'Verde', 'Negro', 'Blanco', 'Gris']
+const validCategory = ['Ropa', 'Gorras', 'Accesorios', 'Vinilos']
 const validSize = ['XS', 'S', 'M', 'L', 'XL']
 
 const ProductSchema = new mongoose.Schema({
@@ -46,9 +46,9 @@ const ProductSchema = new mongoose.Schema({
 
 const Product = mongoose.model('Product', ProductSchema);
 
-module.exports = Product
-
-// Por si me hacen falta en otro archivo
-module.exports.validColors = validColors;
-module.exports.validCategory = validCategory;
-module.exports.validSize = validSize;
+module.exports = {
+  Product,
+  validColors,
+  validCategory,
+  validSize
+}

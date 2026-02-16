@@ -19,9 +19,11 @@ const getProductCards = (products, { isDashboard = false } = {}) => {
       ${ isDashboard ? 
           `
           <div class="dashboardBtn">
-            <a href="${basePath}/${p._id}/edit">Editar</a>
+            <form class="formEdit" method="GET" action="${basePath}/${p._id}/edit">
+              <input class="btnEdit" type="submit" value="Editar"/>
+            </form>
             <form class="formDelete" method="POST" action="${basePath}/${p._id}/delete?_method=DELETE">
-              <button class="btnDelete" type="submit">Eliminar</button>
+              <input class="btnDelete" type="submit" value="Eliminar"/>
             </form>
           </div>
 
@@ -32,6 +34,5 @@ const getProductCards = (products, { isDashboard = false } = {}) => {
     `
   ).join('')
 } 
-
 
 module.exports = getProductCards

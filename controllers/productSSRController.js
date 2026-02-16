@@ -1,14 +1,15 @@
 // Lógica para manejar solicitudes CRUD de los productos.
 // Devuelve HTML
-const Product = require('../models/Product.js')
+const { Product, validColors, validCategory, validSize } = require('../models/Product.js')
 const cloudinary = require('../config/cloudinary.js')
 const getProductCards = require('../helpers/getProductCards.js')
 const baseHtml = require('../helpers/baseHtml.js')
+const getProductForm = require('../helpers/formProduct.js')
 
-//     // showProducts    // GET Vista con todos los products
+    // showProducts    // GET Vista con todos los products
 // showNewProduct  // GET Vista con el formulario para subir un nuevo product 
-// // createProduct   // GET Crea un producto y redirige al showProductById 
-// // showProductById // GET Vista del producto con boton para EDIT y DELETE
+// createProduct   // GET Crea un producto y redirige al showProductById 
+// showProductById // GET Vista del producto con boton para EDIT y DELETE
 // showEditProduct // GET Vista para editar producto dentro del productId
 // updateProduct   // PUT Actualiza y redirige al showProductById
 // deleteProduct   // DELETE Elimina y redirige al showProductById
@@ -37,13 +38,10 @@ const baseHtml = require('../helpers/baseHtml.js')
 
 
 const controllerProduct = {
-  async showProducts (req, res) {
+  async showProducts (req, res) {                                                      // Si da tiempo, aplicar la misma lógica que en el form, sacando el HTML, mejor estructurado todos igual.
     try {
-
       const isDashboard = req.isDashboard
       const products = await Product.find()
-      const productCards = getProductCards(products, { isDashboard: req.isDashboard })
-
       const html = baseHtml({
         title: isDashboard ? 'Dashboard' : 'Tienda',
         isDashboard,
@@ -51,78 +49,51 @@ const controllerProduct = {
         `
           <section class="headerCreate">
             <h2>${isDashboard ? 'Tablero de edición' : 'Productos'}</h2>
-            ${isDashboard ? `<a class="btnCreate" href="/new">Añade un nuevo producto</a>` : ''}
+            ${isDashboard ? `<a class="btnCreate" href="/dashboard/new">Añade un nuevo producto</a>` : ''}
           </section>
           <section>
-            ${productCards}
+            ${getProductCards(products, { isDashboard })}
           </section>
         ` 
       })
-      // console.log(html)
-
       res.send(html)
       
     } catch (error) {
-        res.status(500).send('error to show products')
+        res.status(500).send('Error al mostrar productos')
     }
   },
   
   async showNewProduct (req, res) {
     try {
-
-      const html = baseHtml({
-        title: 'Nuevo producto',
-        isDashboard, 
-        content: 
-        `
-
-
-        ` 
+      const html = baseHtml({ 
+        title: 'Nuevo producto', 
+        isDashboard: req.isDashboard, 
+        content: getProductForm({ 
+          validCategory, 
+          validColors, 
+          validSize,
+          action: '/dashboard/form'
+        }) 
       })
-
-      res.redirect(`/dashboard/${product._id}`)
-    } catch (error) {
-        res.status(500).send('error to show product')
-    }
-  },
-
-  async showProductById (req, res) {    //Devuelve la vista con el detalle de un producto
-    try {
-      const product = await Product.findById(req.params.productId)
-      
-      if(!product) {
-        return res.status(404).send('product not found')
-      }
-
-      const productCard = getProductCards([product], { isDashboard: true })
-      const html = baseHtml({ title: product.name, isDashboard: true, content: productCard })
-      console.log(html)
-
-      res.send(html)
+      return res.send(html)
 
     } catch (error) {
-        res.status(500).send('error to show product')
+        res.status(500).send('Error al mostrar el formulario', error)
     }
-
   },
 
   async createProduct (req, res) {
     try {
-      console.log(req.body)
-      const { name, description, image, color, category, size, price } = req.body
+      const { name, description, color, category, size, price } = req.body
 
-      // if(!name || !description || !category || !price) {
-      //   return res.status(400).send('Faltan campos obligatorios')
-      // }
-
-      // const imageUp = await cloudinary.uploader.upload(req.file.path, {
-      //   folder: 'tienda-ProjectBreak02'
-      // })
+      if(!name || !description || !category || !price) {
+        return res.status(400).send('Faltan campos obligatorios')
+      }
 
       const newProduct = await Product.create({
         name,
         description,
-        image,
+        image: req.file?.path,
         color,
         category,
         size,
@@ -131,11 +102,106 @@ const controllerProduct = {
       res.redirect(`/dashboard/${newProduct._id}`)
 
     } catch (err) {
-      console.error(err)
       res.status(500).send('Error al subir un nuevo producto')
     }
   },
+  async showEditProduct (req, res) {
+    try {
+      const product = await Product.findById(req.params.id)
 
+      if(!product) {
+        return res.status(404).send('Producto no encontrado')
+      }
+
+      const html = baseHtml({ 
+        title: `Editar ${product.name}`, 
+        isDashboard: req.isDashboard, 
+        content: getProductForm({
+          product,
+          validCategory, 
+          validColors, 
+          validSize
+        }) 
+      })
+      return res.send(html)
+
+    } catch (error) {
+        res.status(500).send('Error al mostrar el formulario')
+    }
+  },
+
+  async showProductById (req, res) {                                 //Devuelve la vista con el detalle de un producto
+    try {
+      const product = await Product.findById(req.params.id)
+    
+      if(!product) {
+        return res.status(404).send('Producto no encontrado')
+      }
+      const html = baseHtml({ 
+        title: product.name, 
+        isDashboard: req.isDashboard, 
+        content: `${getProductCards([product], { isDashboard: req.isDashboard })}`
+      })
+      res.send(html)
+
+    } catch (error) {
+        res.status(500).send('Error al intentar visualizar este producto')
+    }
+  },
+
+  async updateProduct (req, res) {
+    try {
+
+      const updateProduct = { ...req.body } 
+      if(req.file) {
+        updateProduct.image = req.file.path
+      }
+
+      const product = await Product.findByIdAndUpdate(
+        req.params.id,
+        updateProduct, {
+          new: true,
+          runValidators: true,   // Opción de Mongoose que habilita la validación del esquema durante las actualizaciones porque no lo hace por defecto.
+        },
+      )
+      if(!product) {
+        return res.status(404).send('Producto no encontrado')
+      }
+      const html = 
+      `
+      <script>
+        alert('Producto actualizado correctamente')
+        window.location.href="/dashboard/${product._id}"
+      </script>
+      `
+      res.send(html)
+      // res.redirect(`/dashboard/${product._id}/edit`)
+      
+    } catch (error) {
+         res.status(500).send('Error al intentar actualizar este producto', error)
+    }
+  },
+
+  async deleteProduct (req, res) {
+    try {
+      const product = await Product.findByIdAndDelete(req.params.id)
+
+      if(!product) {
+        return res.status(404).send('Producto no encontrado')
+      }
+      const html = 
+      `
+        <script>
+          alert('Producto ${product.name} eliminado correctamente')
+          window.location.href="/dashboard"
+        </script>
+      `
+      res.send(html)
+
+    }catch (error) {
+      res.status(500).send('Error al intentar borrar este producto', error)
+    }
+  },
 }
 
 module.exports = controllerProduct
