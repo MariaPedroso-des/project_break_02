@@ -9,6 +9,9 @@ const dotenv = require('dotenv')
 dotenv.config()
 const productsSSRRoutes = require('./routes/productSSRRoutes.js')
 
+//CSS 
+app.use(express.static('public'))
+
 // const mongoose = require('mongoose')
 
 const { dbConnection } = require('./config/db.js')

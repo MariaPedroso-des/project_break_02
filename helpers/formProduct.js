@@ -11,7 +11,7 @@ const getProductForm = ({ product = {}, validCategory, validColors, validSize })
   const sizeOp = validSize
     .map(size => `<option value='${size}'${size === product.size ? 'selected' : ''}>${size}</option>`)
     .join('')
-//-- PUT no lo reconoce el HTML, por eso se pone POST, y más abajo PUT con hidden_method para que noaparezcan los datos en la url --
+//-- PUT no lo reconoce el HTML, por eso se pone POST, y más abajo PUT con hidden_method para que no aparezcan los datos en la url --
   return `
     <section class="formCreate">
       <h2>${product._id ? 'Editar producto' : 'Nuevo producto'}</h2>

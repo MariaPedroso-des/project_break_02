@@ -4,7 +4,7 @@
 
 const getProductCards = (products, { isDashboard = false } = {}) => {
 
-  const basePath = isDashboard ? '/dashboard' : '/'
+  const basePath = isDashboard ? '/dashboard' : '/products'
 
   return products.map( p => 
     `

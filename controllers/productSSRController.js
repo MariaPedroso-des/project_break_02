@@ -93,12 +93,13 @@ const controllerProduct = {
       const newProduct = await Product.create({
         name,
         description,
-        image: req.file?.path,
+        image: req.file ? req.file.path : null,
         color,
         category,
         size,
         price,
       })
+
       res.redirect(`/dashboard/${newProduct._id}`)
 
     } catch (err) {
@@ -151,8 +152,13 @@ const controllerProduct = {
 
   async updateProduct (req, res) {
     try {
+      const { name, description, color, category, size, price } = req.body
 
-      const updateProduct = { ...req.body } 
+      if(!name || !description || !category || !price) {
+        return res.status(400).send('Faltan campos obligatorios')
+      }
+
+      const updateProduct = { name, description, color, category, size, price }
       if(req.file) {
         updateProduct.image = req.file.path
       }
