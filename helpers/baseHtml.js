@@ -3,13 +3,13 @@ const getNavBar = require('./getNavBar.js')
 const getProductCards = require('./getProductCards.js')
 
 
-const baseHtml = ({ title = 'Tienda-ProjectBreak02', content = getProductCards(), isDashboard = false }) => `
+const baseHtml = ({ title = 'Tienda-ProjectBreak02', content = '', isDashboard = false }) => `
   <!DOCTYPE html>
   <html lang="es">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${title}}</title>
+    <title>${title}</title>
     <link rel="stylesheet" href="../public/styles.css">
   </head>
   <body>

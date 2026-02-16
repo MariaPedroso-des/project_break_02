@@ -7,6 +7,21 @@
   <link rel="stylesheet" href="../public/styles.css">
 </head>
 <body>
+  <section class="headerCreate">
+    <h2>Tablero de edición</h2>
+    <a class="btnCreate" href="/new">Añade un nuevo producto</a>
+  </section>
+  <section>
+    ${productsCards}
+  </section>
   
+  <a href="/products/${product._id}" class="imgOn">
+    <img src="${product.image}" alt="${product.description}">
+  </a>
+    <h2>${product.name}</h2>
+    <p>descripción</p>
+    <p>precio</p>
+  
+    
 </body>
 </html>

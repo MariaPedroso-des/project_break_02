@@ -39,3 +39,8 @@ npm i -D jest -> porque no es una dependencia que necesite mi proyecto, sino una
 
 
 --// Comprobación para saber si la BD está conectada. Desde index.js: imprimir console.log(mongoose.connection.readyState) DESPUÉS DE LLAMAR await dbConnection()
+
+
+-- Funciones para HTML, Navbar y getProductCards
+-- Junto a rutas a mostrar en el navegador
+-- Rutas Api, igual al SSR pero sin mostrar nada en navegador

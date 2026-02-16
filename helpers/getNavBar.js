@@ -1,9 +1,12 @@
 //Genera la barra de navegación con las categorias. Diferente para dashboard
 
-const getNavBar = ({ isDashboard = false } = {}) =>
-  `
+const getNavBar = ({ isDashboard = false } = {}) => {
+
+  const basePath = isDashboard ? '/dashboard' : '/'
+
+  return `
     <nav>
-      <a href="/inicio">Inicio</a>
+      <a href="">Inicio</a>
       <a href="/products">Productos</a>
       <a href="/ropa">Ropa</a>
       <a href="/gorras">Gorras</a>
@@ -12,15 +15,14 @@ const getNavBar = ({ isDashboard = false } = {}) =>
 
       ${ isDashboard ? 
           `
-          <a href="/products/nuevo">Nuevo producto</a>
-          <a href="/logout">Cerrar sesión</a>
+          <a href="${basePath}/logout">Cerrar sesión</a>
           `
         : 
           `
-          <a href="/login">Iniciar sesión</a>
+          <a href="${basePath}/login">Iniciar sesión</a>
           `    
       }
     </nav>
-  `
+  `}
 
 module.exports = getNavBar

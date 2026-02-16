@@ -2,20 +2,36 @@
 
 //EJEMPLO
 
-function getProductCards(products) {
-  let html = '';
-  for (let product of products) {
-    html += `
-      <div class="product-card">
-        <img src="${product.image}" alt="${product.name}">
-        <h2>${product.name}</h2>
-        <p>${product.description}</p>
-        <p>${product.price}€</p>
-        <a href="/products/${product._id}">Ver detalle</a>
+const getProductCards = (products, { isDashboard = false } = {}) => {
+
+  const basePath = isDashboard ? '/dashboard' : '/'
+
+  return products.map( p => 
+    `
+      <div class="productCard">
+        <a href="${basePath}/${p._id}" class="imgOn">
+          <img src="${p.image}" alt="${p.description}">
+        </a>
+        <h2>${p.name}</h2>
+        <p>${p.description}</p>
+        <p>${p.price}€</p>
+      
+      ${ isDashboard ? 
+          `
+          <div class="dashboardBtn">
+            <a href="${basePath}/${p._id}/edit">Editar</a>
+            <form class="formDelete" method="POST" action="${basePath}/${p._id}/delete?_method=DELETE">
+              <button class="btnDelete" type="submit">Eliminar</button>
+            </form>
+          </div>
+
+          `
+        : ''
+      }
       </div>
-    `;
-  }
-  return html;
-}
+    `
+  ).join('')
+} 
+
 
 module.exports = getProductCards
