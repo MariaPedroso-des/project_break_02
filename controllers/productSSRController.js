@@ -41,6 +41,14 @@ const controllerProduct = {
   async showProducts (req, res) {                                                      // Si da tiempo, aplicar la misma lógica que en el form, sacando el HTML, mejor estructurado todos igual.
     try {
       const isDashboard = req.isDashboard
+      const { category } = req.query
+
+      const filters = {}
+
+      if(category) {
+        filters.category = category
+      }
+
       const products = await Product.find()
       const html = baseHtml({
         title: isDashboard ? 'Dashboard' : 'Tienda',
@@ -106,6 +114,7 @@ const controllerProduct = {
       res.status(500).send('Error al subir un nuevo producto')
     }
   },
+
   async showEditProduct (req, res) {
     try {
       const product = await Product.findById(req.params.id)

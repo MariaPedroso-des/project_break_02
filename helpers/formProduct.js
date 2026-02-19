@@ -16,7 +16,7 @@ const getProductForm = ({ product = {}, validCategory, validColors, validSize })
     <section class="formCreate">
       <h2>${product._id ? 'Editar producto' : 'Nuevo producto'}</h2>
 
-      <form method="POST" action="/dashboard/${product._id}" enctype="multipart/form-data"> 
+      <form method="POST" action="${product._id ? `/dashboard/${product._id}` : '/dashboard/form'}" enctype="multipart/form-data"> 
         ${product._id ? `<input type="hidden" name="_method" value="PUT">` : ''}
           <fieldset>
             <div>

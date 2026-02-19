@@ -1,17 +1,18 @@
 //Genera la barra de navegación con las categorias. Diferente para dashboard
+const validCategory = require('../models/Product.js')
 
 const getNavBar = ({ isDashboard = false } = {}) => {
 
-  const basePath = isDashboard ? '/dashboard' : '/'
+  const basePath = isDashboard ? '/dashboard' : '/products'
 
   return `
     <nav>
       <a href="">Inicio</a>
       <a href="/products">Productos</a>
-      <a href="/ropa">Ropa</a>
-      <a href="/gorras">Gorras</a>
-      <a href="/accesorios">Accesorios</a>
-      <a href="/vinilos">Vinilos</a>
+      <a href="${basePath}?category=ropa">Ropa</a>
+      <a href="${basePath}?category=gorras">Gorras</a>
+      <a href="${basePath}?category=accesorios">Accesorios</a>
+      <a href="${basePath}?category=vinilos">Vinilos</a>
 
       ${ isDashboard ? 
           `
