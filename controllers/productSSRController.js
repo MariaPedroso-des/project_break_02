@@ -6,37 +6,6 @@ const getProductCards = require('../helpers/getProductCards.js')
 const baseHtml = require('../helpers/baseHtml.js')
 const getProductForm = require('../helpers/formProduct.js')
 
-    // showProducts    // GET Vista con todos los products
-// showNewProduct  // GET Vista con el formulario para subir un nuevo product 
-// createProduct   // GET Crea un producto y redirige al showProductById 
-// showProductById // GET Vista del producto con boton para EDIT y DELETE
-// showEditProduct // GET Vista para editar producto dentro del productId
-// updateProduct   // PUT Actualiza y redirige al showProductById
-// deleteProduct   // DELETE Elimina y redirige al showProductById
-
-// -GET /dashboard: Devuelve el dashboard del administrador. En el dashboard aparecerán todos los artículos que se hayan subido. Si clickamos en uno de ellos nos llevará a su página para poder actualizarlo o eliminarlo.
-//       showProducts: Devuelve la vista con todos los productos.
-
-// -GET /dashboard/new: Devuelve el formulario para subir un artículo nuevo.
-// -      showNewProduct: Devuelve la vista con el formulario para subir un artículo nuevo. 
-
-// -POST /dashboard/form: Crea un nuevo producto.
-// -       createProduct: Crea un nuevo producto. Una vez creado, redirige a la vista de detalle del producto o a la vista de todos los productos del dashboard.
-
-// -GET /dashboard/:productId: Devuelve el detalle de un producto en el dashboard.
-// -     showProductById: Devuelve la vista con el detalle de un producto.
-
-//  GET /dashboard/:productId/edit: Devuelve el formulario para editar un producto.
-// -       showEditProduct: Devuelve la vista con el formulario para editar un producto.
-
-// -PUT /dashboard/:productId: Actualiza un producto.
-// -      updateProduct: Actualiza un producto. Una vez actualizado, redirige a la vista de detalle del producto o a la vista de todos los productos del dashboard.
-
-// -DELETE /dashboard/:productId/delete: Elimina un producto.
-// -     deleteProduct: Elimina un producto. Una vez eliminado, redirige a la vista de todos los productos del dashboard.
-
-
-
 const controllerProduct = {
   async showProducts (req, res) {                                                      // Si da tiempo, aplicar la misma lógica que en el form, sacando el HTML, mejor estructurado todos igual.
     try {
@@ -49,7 +18,7 @@ const controllerProduct = {
         filters.category = category
       }
 
-      const products = await Product.find()
+      const products = await Product.find(filters)
       const html = baseHtml({
         title: isDashboard ? 'Dashboard' : 'Tienda',
         isDashboard,
@@ -67,6 +36,7 @@ const controllerProduct = {
       res.send(html)
       
     } catch (error) {
+        console.log(error)
         res.status(500).send('Error al mostrar productos')
     }
   },
@@ -86,12 +56,15 @@ const controllerProduct = {
       return res.send(html)
 
     } catch (error) {
-        res.status(500).send('Error al mostrar el formulario', error)
+        console.log(error)
+        res.status(500).send('Error al mostrar el formulario')
     }
   },
 
   async createProduct (req, res) {
     try {
+      console.log(req.body)
+      console.log(req.file)
       const { name, description, color, category, size, price } = req.body
 
       if(!name || !description || !category || !price) {
@@ -102,6 +75,7 @@ const controllerProduct = {
         name,
         description,
         image: req.file ? req.file.path : null,
+        imagePublicId: req.file ? req.file.filename : null,
         color,
         category,
         size,
@@ -111,6 +85,7 @@ const controllerProduct = {
       res.redirect(`/dashboard/${newProduct._id}`)
 
     } catch (err) {
+      console.log(err)
       res.status(500).send('Error al subir un nuevo producto')
     }
   },
@@ -136,6 +111,7 @@ const controllerProduct = {
       return res.send(html)
 
     } catch (error) {
+        console.log(error)
         res.status(500).send('Error al mostrar el formulario')
     }
   },
@@ -155,21 +131,35 @@ const controllerProduct = {
       res.send(html)
 
     } catch (error) {
+        console.log(error)
         res.status(500).send('Error al intentar visualizar este producto')
     }
   },
 
   async updateProduct (req, res) {
     try {
+      console.log(req.body)
+      console.log(req.file)
+
       const { name, description, color, category, size, price } = req.body
 
       if(!name || !description || !category || !price) {
         return res.status(400).send('Faltan campos obligatorios')
       }
 
+      const existProduct = await Product.findById(req.params.id)
+      if(!existProduct) {
+        return res.status(404).send('Producto no encontrado')
+      } 
+
       const updateProduct = { name, description, color, category, size, price }
       if(req.file) {
+
+        if(existProduct.imagePublicId) {
+          await cloudinary.uploader.destroy(existProduct.imagePublicId)
+        }
         updateProduct.image = req.file.path
+        updateProduct.imagePublicId = req.file.filename
       }
 
       const product = await Product.findByIdAndUpdate(
@@ -193,17 +183,25 @@ const controllerProduct = {
       // res.redirect(`/dashboard/${product._id}/edit`)
       
     } catch (error) {
-         res.status(500).send('Error al intentar actualizar este producto', error)
+        console.log(error)
+        res.status(500).send('Error al intentar actualizar este producto')
     }
   },
 
   async deleteProduct (req, res) {
     try {
-      const product = await Product.findByIdAndDelete(req.params.id)
-
+     const product = await Product.findById(req.params.id)
+    
       if(!product) {
         return res.status(404).send('Producto no encontrado')
       }
+
+      if(product.imagePublicId) {
+        await cloudinary.uploader.destroy(product.imagePublicId)
+      }
+
+      await Product.findByIdAndDelete(req.params.id)
+
       const html = 
       `
         <script>
@@ -214,7 +212,8 @@ const controllerProduct = {
       res.send(html)
 
     }catch (error) {
-      res.status(500).send('Error al intentar borrar este producto', error)
+      console.log(error)
+      res.status(500).send('Error al intentar borrar este producto')
     }
   },
 }

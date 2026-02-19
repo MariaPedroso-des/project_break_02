@@ -30,7 +30,7 @@ const getProductForm = ({ product = {}, validCategory, validColors, validSize })
               <label>Imagen actual</label>
               ${product.image ? `<img class="imgForm" src="${product.image}" alt="${product.description}">` : ''}
               <label>Actualizar imagen</label>
-              <input type="file" name="image" accept="image/jpg, image/jpeg, image/png, image/webp">
+              <input type="file" name="image" accept="image/jpg, image/jpeg, image/png, image/webp"/>
             <div>
               <label>Categoría*</label>
               <select name="category">${categoryOp}</select>  
@@ -45,7 +45,7 @@ const getProductForm = ({ product = {}, validCategory, validColors, validSize })
             </div>
             <div>
               <label>Precio*</label>
-              <input type="number" step="0.01" value="${product.price || '0.01'}" name="price" required>
+              <input type="number" step="0.01" value="${product.price || '0.01'}" name="price" required/>
             </div>
             <section>
               <input type="reset" value="Limpiar formulario"/>

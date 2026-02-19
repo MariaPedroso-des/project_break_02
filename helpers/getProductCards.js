@@ -10,7 +10,7 @@ const getProductCards = (products, { isDashboard = false } = {}) => {
     `
       <div class="productCard">
         <a href="${basePath}/${p._id}" class="imgOn">
-          <img src="${p.image}" alt="${p.description}">
+          <img src="${p.image.replace('/upload/', '/upload/w_400,h_400,c_fil,g_auto,q_auto,f_auto/')}" alt="${p.description}"/>
         </a>
         <h2>${p.name}</h2>
         <p>${p.description}</p>

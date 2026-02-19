@@ -7,8 +7,8 @@ const getNavBar = ({ isDashboard = false } = {}) => {
 
   return `
     <nav>
-      <a href="">Inicio</a>
-      <a href="/products">Productos</a>
+      <a href="/">Inicio</a>
+      <a href="/products"></a>
       <a href="${basePath}?category=ropa">Ropa</a>
       <a href="${basePath}?category=gorras">Gorras</a>
       <a href="${basePath}?category=accesorios">Accesorios</a>
