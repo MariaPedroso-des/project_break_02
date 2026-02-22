@@ -9,7 +9,7 @@ const getProductForm = require('../helpers/formProduct.js')
 const controllerProduct = {
   async showProducts (req, res) {                                                      // Si da tiempo, aplicar la misma lógica que en el form, sacando el HTML, mejor estructurado todos igual.
     try {
-      const isDashboard = req.isDashboard
+      const isDashboard = req.isDashboard || false
       const { category } = req.query
 
       const filters = {}
@@ -28,7 +28,7 @@ const controllerProduct = {
             <h2>${isDashboard ? 'Tablero de edición' : 'Productos'}</h2>
             ${isDashboard ? `<a class="btnCreate" href="/dashboard/new">Añade un nuevo producto</a>` : ''}
           </section>
-          <section>
+          <section class="sectionCards">
             ${getProductCards(products, { isDashboard })}
           </section>
         ` 
@@ -123,6 +123,9 @@ const controllerProduct = {
       if(!product) {
         return res.status(404).send('Producto no encontrado')
       }
+
+      const isDashboard = req.isDashboard || false
+
       const html = baseHtml({ 
         title: product.name, 
         isDashboard: req.isDashboard, 
@@ -179,8 +182,8 @@ const controllerProduct = {
         window.location.href="/dashboard/${product._id}"
       </script>
       `
-      res.send(html)
-      // res.redirect(`/dashboard/${product._id}/edit`)
+      // res.send(html)
+      res.redirect(`/dashboard/${product._id}`)
       
     } catch (error) {
         console.log(error)

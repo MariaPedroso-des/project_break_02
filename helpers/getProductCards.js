@@ -4,11 +4,13 @@ const getProductCards = (products, { isDashboard = false } = {}) => {
 
   const basePath = isDashboard ? '/dashboard' : '/products'
 
-  return products.map( p => 
-    `
+  return products.map( p => {
+    const imgUrl = p.image ? p.image.replace('/upload', '/upload/w_400,h_400,c_fil,g_auto,q_auto,f_auto/') : '/no-image.png'
+
+    return `
       <div class="productCard">
         <a href="${basePath}/${p._id}" class="imgOn">
-          <img src="${p.image.replace('/upload/', '/upload/w_400,h_400,c_fil,g_auto,q_auto,f_auto/')}" alt="${p.description}"/>
+          <img src="${imgUrl}" alt="${p.description}"/>
         </a>
         <h2>${p.name}</h2>
         <p>${p.description}</p>
@@ -30,7 +32,7 @@ const getProductCards = (products, { isDashboard = false } = {}) => {
       }
       </div>
     `
-  ).join('')
+  }).join('')
 } 
 
 module.exports = getProductCards

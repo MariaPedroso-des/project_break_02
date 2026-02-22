@@ -4,9 +4,6 @@ const { Product } = require('../models/Product.js')
 const upload = require('../middlewares_bonus/uploadCloudinaryMiddleware.js')
 const cloudinary = require('../config/cloudinary.js')
 const productSSRController = require('../controllers/productSSRController.js')
-const methodOverride = require('method-override')
-
-router.use(methodOverride('_method'))
 
 //Tienda
 router.get('/products', productSSRController.showProducts)

@@ -1,3 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700;900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&display=swap');
+
+:root {
+	--color-red: #DC664C;
+	--color-violet: #35348551;
+	--color-black: #1d1d1da3;
+	--color-green: #62E06E;
+
+	--font-titles: 'Orbitron', sans-serif;
+	--font-subtitles: 'Barlow', sans-serif;
+	--font-text: 'Montserrat', sans-serif;
+	--font-light: 300;
+	--font-regular: 400;
+	--font-medium: 600;
+	--font-bold: 700;
+	--font-black: 900; 
+}
+
 /*RESET*/
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -45,3 +63,74 @@ table {
 
 /*Mi diseño*/
 
+main {
+	margin-top: 100px;
+	padding: 8px;
+	display: flex;
+	gap: 8px
+
+}
+
+nav {
+	justify-content: space-between;
+	align-items: center;
+	border-radius:0 0 40px 40px;
+	letter-spacing: 4px;
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	display: flex;
+	padding-top: 24px;
+	padding-bottom: 24px;
+	font-size: 24px;
+	font-family: var(--font-titles);
+	font-weight: var(--font-bold);
+	color: #353485;
+	background-color:  rgba(145, 145, 145, 0.564);
+}
+
+h2 {
+	letter-spacing: 4px;
+	font-family: var(--font-titles);
+	font-weight: var(--font-bold);
+}
+.headerCreate {
+	margin-top: 100px;
+	display: flex;
+}
+
+.sectionCards {
+	margin-top: 100px;
+		display: flex;
+}
+
+.btnDelete,
+.btnEdit,
+.btnCreate {
+	background-color: var(--color-green);
+	border: none;
+	border-radius: 16px;
+	padding: 12px;
+	font-family: var(--font-text);
+	font-weight: var(--font-bold);
+}
+
+.productCard {
+	display: flex;
+	flex-wrap: wrap;
+	overflow: hidden;
+	border: 2px solid grey;
+	border-radius: 16px;
+	text-align: center;
+}
+
+.productCard imgOn:hover img {
+	filter: brightness(70%);
+	cursor: pointer;
+}
+
+section > .productCard {
+	display: grid;
+}
