@@ -1,7 +1,5 @@
 //getProductCards: Genera el html de los productos. Recibe un array de productos y devuelve el html de las tarjetas de los productos.
 
-//EJEMPLO
-
 const getProductCards = (products, { isDashboard = false } = {}) => {
 
   const basePath = isDashboard ? '/dashboard' : '/products'
