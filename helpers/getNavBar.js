@@ -9,10 +9,10 @@ const getNavBar = ({ isDashboard = false } = {}) => {
     <nav>
       <a href="/">Inicio</a>
       <a href="/products"></a>
-      <a href="${basePath}?category=ropa">Ropa</a>
-      <a href="${basePath}?category=gorras">Gorras</a>
-      <a href="${basePath}?category=accesorios">Accesorios</a>
-      <a href="${basePath}?category=vinilos">Vinilos</a>
+      <a href="${basePath}?category=Ropa">Ropa</a>
+      <a href="${basePath}?category=Gorras">Gorras</a>
+      <a href="${basePath}?category=Accesorios">Accesorios</a>
+      <a href="${basePath}?category=Vinilos">Vinilos</a>
 
       ${ isDashboard ? 
           `

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700;900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
 	--color-red: #DC664C;
@@ -6,9 +6,7 @@
 	--color-black: #1d1d1da3;
 	--color-green: #62E06E;
 
-	--font-titles: 'Orbitron', sans-serif;
-	--font-subtitles: 'Barlow', sans-serif;
-	--font-text: 'Montserrat', sans-serif;
+	--font: 'Montserrat', sans-serif;
 	--font-light: 300;
 	--font-regular: 400;
 	--font-medium: 600;
@@ -63,74 +61,166 @@ table {
 
 /*Mi diseño*/
 
+body {
+	font-family: var(--font);
+	text-decoration: none;
+}
+
 main {
-	margin-top: 100px;
-	padding: 8px;
+	margin-top: 80px;
+	padding: 16px;
 	display: flex;
-	gap: 8px
+	flex-direction: column;
+	gap: 36px;
 
 }
 
 nav {
+	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	border-radius:0 0 40px 40px;
-	letter-spacing: 4px;
 	position: fixed;
-	width: 100%;
 	top: 0;
 	left: 0;
+	width: 100%;
 	z-index: 999;
-	display: flex;
-	padding-top: 24px;
-	padding-bottom: 24px;
-	font-size: 24px;
-	font-family: var(--font-titles);
-	font-weight: var(--font-bold);
-	color: #353485;
-	background-color:  rgba(145, 145, 145, 0.564);
+	padding: 24px 40px;
+	border-radius:0 0 20px 20px;
+	font-size: 1rem;
+	letter-spacing: 4px;
+	font-family: var(--font);
+	font-weight: var(--font-black);
+	color: var(--color-red);
+	background-color:  rgba(0, 0, 0, 0.81);
+}
+
+nav a {
+	text-decoration: none;
+	color: inherit;
+	transition: color 0.2s;
+}
+
+nav a:hover {
+	color: #851c05;
 }
 
 h2 {
 	letter-spacing: 4px;
-	font-family: var(--font-titles);
-	font-weight: var(--font-bold);
+	font-size: 24px;
+	font-family: var(--font);
+	font-weight: var(--font-black);
+	color: #353485;
 }
+
+p {
+	font-size: 16px;
+	font-family: var(--font);
+	font-weight: var(--font-medium);
+	color: var(--color-black);
+}
+
+h6 {
+	font-size: 12px;
+}
+
 .headerCreate {
-	margin-top: 100px;
 	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 24px;
+}
+
+.headerCreate h2 {
+	letter-spacing: 4px;
+	font-size: 40px;
+	font-family: var(--font);
+	font-weight: var(--font-black);
+	color: #353485;
 }
 
 .sectionCards {
-	margin-top: 100px;
-		display: flex;
-}
-
-.btnDelete,
-.btnEdit,
-.btnCreate {
-	background-color: var(--color-green);
-	border: none;
-	border-radius: 16px;
-	padding: 12px;
-	font-family: var(--font-text);
-	font-weight: var(--font-bold);
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+	gap: 24px;
 }
 
 .productCard {
 	display: flex;
-	flex-wrap: wrap;
+	flex-direction: column;
 	overflow: hidden;
-	border: 2px solid grey;
+	border: 1px solid grey;
 	border-radius: 16px;
 	text-align: center;
+	padding: 16px;
+	gap: 8px;
+	background:#ffffff;
 }
 
-.productCard imgOn:hover img {
+.dashboardBtn,
+.btnForm {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.formCreate form fieldset {
+	margin-top: 40px;
+	display: flex;
+	flex-direction: column;
+	grid-template-columns: 1fr 1fr;
+	gap: 24px;
+	border: none;
+	padding: 0;
+}
+
+.complete {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.formCreate label {
+	font-weight: var(--font-medium);
+}
+
+.formCreate input,
+.formCreate textarea,
+.formCreate select {
+	padding: 8px;
+	border: 1px solid #62E06E;
+	border-radius: 8px;
+	font-family: var(--font);
+}
+
+.btnDelete,
+.btnEdit,
+.btnCreate,
+.btnCrear,
+.btnLimpiar {
+	background-color: var(--color-green);
+	border: none;
+	border-radius: 16px;
+	padding: 12px;
+	text-decoration: none;
+	margin-top: auto;
+	display: flex;
+	gap: 8px;
+	justify-content: space-evenly;
+	font-family: var(--font);
+	font-weight: 700;
+}
+
+/*botones*/
+
+.btnEdit:hover,
+.btnDelete:hover,
+.btnCreate:hover,
+.btnCrear:hover,
+.btnLimpiar:hover {
 	filter: brightness(70%);
 	cursor: pointer;
 }
 
-section > .productCard {
-	display: grid;
+.imgOn:hover img {
+	filter: brightness(70%);
+	cursor: pointer;
 }

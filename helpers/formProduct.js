@@ -19,37 +19,39 @@ const getProductForm = ({ product = {}, validCategory, validColors, validSize })
       <form method="POST" action="${product._id ? `/dashboard/${product._id}` : '/dashboard/form'}" enctype="multipart/form-data"> 
         ${product._id ? `<input type="hidden" name="_method" value="PUT">` : ''}
           <fieldset>
-            <div>
+            <div class="complete">
               <label>Nombre del producto*</label>
-              <input type="text" name="name" value="${product.name || ''}" placeholder="nombre visible del producto" required/>
+              <input type="text" name="name" value="${product.name || ''}" placeholder="Nombre visible del producto" required/>
             </div>
-            <div>
+            <div class="complete">
               <label>Descripción*</label>
               <textarea type="text" name="description" placeholder="Breve descripción del nuevo producto" required>${product.description || ''}</textarea>
             </div>
+            <div class="complete">
               <label>Imagen actual</label>
               ${product.image ? `<img class="imgForm" src="${product.image}" alt="${product.description}">` : ''}
               <label>Actualizar imagen</label>
               <input type="file" name="image" accept="image/jpg, image/jpeg, image/png, image/webp"/>
-            <div>
+            </div>            
+            <div class="complete">
               <label>Categoría*</label>
               <select name="category">${categoryOp}</select>  
             </div>
-            <div>
+            <div class="complete">
               <label>Color<h6>*solo si es necesario</h6></label>
               <select name="color">${colorOp}</select>
             </div>
-            <div>
+            <div class="complete">
               <label>Talla<h6>*solo si es necesario</h6></label>
               <select name="size">${sizeOp}</select>
             </div>
-            <div>
+            <div class="complete">
               <label>Precio*</label>
               <input type="number" step="0.01" value="${product.price || '0.01'}" name="price" required/>
             </div>
-            <section>
-              <input type="reset" value="Limpiar formulario"/>
-              <input type="submit" value="${product._id ? 'Actualizar producto' : 'Crear producto'}"/>
+            <section class="btnForm">
+              <input class="btnLimpiar" type="reset" value="Limpiar formulario"/>
+              <input class="btnCrear" type="submit" value="${product._id ? 'Actualizar producto' : 'Crear producto'}"/>
             </section>
           </fieldset>
       </form>
