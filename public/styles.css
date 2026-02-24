@@ -4,7 +4,7 @@
 	--color-red: #DC664C;
 	--color-violet: #35348551;
 	--color-black: #1d1d1da3;
-	--color-green: #62E06E;
+	--color-green: #e2baa1;
 
 	--font: 'Montserrat', sans-serif;
 	--font-light: 300;
@@ -185,9 +185,9 @@ h6 {
 .formCreate input,
 .formCreate textarea,
 .formCreate select {
-	padding: 8px;
-	border: 1px solid #62E06E;
-	border-radius: 8px;
+	padding: 8px 24px;
+	border: 1px solid var(--color-green);
+	border-radius: 16px;
 	font-family: var(--font);
 }
 
@@ -197,16 +197,17 @@ h6 {
 .btnCrear,
 .btnLimpiar {
 	background-color: var(--color-green);
+	color: #851c05;
 	border: none;
 	border-radius: 16px;
-	padding: 12px;
+	padding: 8px 24px;
 	text-decoration: none;
 	margin-top: auto;
 	display: flex;
 	gap: 8px;
 	justify-content: space-evenly;
 	font-family: var(--font);
-	font-weight: 700;
+	font-weight: 600;
 }
 
 /*botones*/
@@ -221,6 +222,57 @@ h6 {
 }
 
 .imgOn:hover img {
+	filter: brightness(70%);
+	cursor: pointer;
+}
+
+/*Portada*/
+
+.intro {
+	position: relative;
+	height: 100vh;
+	overflow: hidden;
+}
+
+.videoIntro {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	min-width: 100%;
+	min-height: 100%;
+	transform: translate(-50%, -50%);
+	object-fit: cover;
+	z-index: 0;
+	filter: brightness(50%)
+}
+
+.introContent {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	height: 100vh;
+	text-align: center;
+	z-index: 2;
+	color: #ffffff;
+}
+.btnIntro {
+	display: flex;
+	justify-content: space-evenly;
+	padding: 16px 40px;
+	gap: 8px;
+	border-radius: 24px;
+	border: none;
+	background-color: #e2baa1;
+	text-decoration: none;
+	color: #ffffff;
+	font-family: var(--font);
+	font-weight: 700;
+	transition: all 0.3s ease-in-out;
+}
+
+.btnIntro:hover {
 	filter: brightness(70%);
 	cursor: pointer;
 }

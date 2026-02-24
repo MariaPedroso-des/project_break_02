@@ -24,10 +24,10 @@ const PORT = process.env.PORT || 3000
 //Middlewares generales
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-//CSS 
-app.use(express.static('public'))
 //Antes que las rutas que lo utilizan
 app.use(methodOverride('_method'))
+//CSS 
+app.use(express.static('public'))
 
 // Middleware específico solo para dashboard
 const isDashboard = require('./middlewares_bonus/isDashboard.js')

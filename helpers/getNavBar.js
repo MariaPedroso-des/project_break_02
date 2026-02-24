@@ -16,11 +16,11 @@ const getNavBar = ({ isDashboard = false } = {}) => {
 
       ${ isDashboard ? 
           `
-          <a href="${basePath}/logout">Cerrar sesión</a>
+          <a href="/products">Cerrar sesión</a>
           `
         : 
           `
-          <a href="${basePath}/login">Iniciar sesión</a>
+          <a href="/dashboard">Iniciar sesión</a>
           `    
       }
     </nav>

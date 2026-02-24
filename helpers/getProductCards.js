@@ -5,7 +5,7 @@ const getProductCards = (products, { isDashboard = false } = {}) => {
   const basePath = isDashboard ? '/dashboard' : '/products'
 
   return products.map( p => {
-    const imgUrl = p.image ? p.image.replace('/upload', '/upload/w_400,h_400,c_fil,g_auto,q_auto,f_auto/') : '/no-image.png'
+    const imgUrl = p.image ? p.image.replace('/upload/', '/upload/w_400,h_400,c_fill,g_auto,q_auto,f_auto/') : '/no-image.png'
 
     return `
       <div class="productCard">
