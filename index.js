@@ -42,7 +42,7 @@ app.use('/api', productApiRoutes)
 const startServer = async () => {
   try {
     await dbConnection()
-    app.listen(PORT, () => console.log(`Server started on port http://localhost:${PORT}`))
+    app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
   }
   catch (err) {
     console.error('Error to start app', err)
